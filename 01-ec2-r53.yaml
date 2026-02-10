@@ -35,3 +35,14 @@
     ansible.builtin.debug:
       msg: "{{ item.instances[0].private_ip_address }}" # Accessing the private IP address of the created instance from the ec2_output variable
     loop: "{{ ec2_output.results }}"
+
+  - name: create route 53 record for the created instance
+    amazon.aws.route53:
+      state: present
+      zone: "{{ domain_name }}"
+      record: "{{ item.item }}.{{ domain_name }}" # Creating a record for the instance using the instance name and the domain name mongodb.daws86s.me
+      type: A
+      ttl: 1
+      value: "{{ item.instances[0].public_ip_address }}" # Using the public IP address of the created instance as the value for the A record in Route 53
+      overwrite: yes
+    loop: "{{ ec2_output.results }}"
