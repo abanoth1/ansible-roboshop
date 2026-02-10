@@ -22,6 +22,16 @@
     loop: "{{ instances }}"
     register: ec2_output       # ec2_output variable will store the output of the ec2_instance module which contains the details of the created instance including the public IP address
 
-  - name: print the ec2 output
+  # - name: print the ec2 output
+  #   ansible.builtin.debug:
+  #     msg: "{{ ec2_output }}"
+
+  - name: print the public_ip of the created instance
     ansible.builtin.debug:
-      msg: "{{ ec2_output }}"
+      msg: "{{ item.instances[0].public_ip_address }}" # Accessing the public IP address of the created instance from the ec2_output variable
+    loop: "{{ ec2_output.results }}" 
+
+  - name: print the private_ip of the created instance
+    ansible.builtin.debug:
+      msg: "{{ item.instances[0].private_ip_address }}" # Accessing the private IP address of the created instance from the ec2_output variable
+    loop: "{{ ec2_output.results }}"
