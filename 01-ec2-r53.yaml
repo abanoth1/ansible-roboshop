@@ -4,10 +4,10 @@
   hosts: localhost
   connection: local
   vars:
-    ami_id:  ami-0220d79f3f480ecf5
-    sg_id:  sg-0ca84109ed7b2fd6a
-    zone_id: Z0643845MTWJNN2ZJCER
-    domain_name: "daws86s.me"
+    ami_id:  ami-0220d79f3f480ecf5 # Replace with the actual AMI ID for your region
+    sg_id:  sg-0ca84109ed7b2fd6a   # Replace with the actual security group ID that allows SSH access
+    zone_id: Z0643845MTWJNN2ZJCER  # Zone ID for the Route 53 hosted zone where you want to create the record and it will remain constant for all the records
+    domain_name: "daws86s.me"      # daws86s.me is the domain name that i registered in route 53 and i'm using it to create the records for the ec2 instances that i will create in this playbook
     instances:
      - mongodb
   tasks:
@@ -20,7 +20,7 @@
       tags:
         name: "{{ item }}"
     loop: "{{ instances }}"
-    register: ec2_output
+    register: ec2_output       # ec2_output variable will store the output of the ec2_instance module which contains the details of the created instance including the public IP address
 
   - name: print the ec2 output
     ansible.builtin.debug:
