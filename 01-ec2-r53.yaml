@@ -4,8 +4,8 @@
   hosts: localhost
   connection: local
   vars:
-    ami_id:  ami-09c813fb71547fc4f
-    sg_id:  sg-05699f53cbbd17753
+    ami_id:  ami-0220d79f3f480ecf5
+    sg_id:  sg-0ca84109ed7b2fd6a
     zone_id: Z0643845MTWJNN2ZJCER
     domain_name: "daws86s.me"
     instances:
