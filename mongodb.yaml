@@ -1,0 +1,10 @@
+# Creating the mongodb server by using the ansible playbook
+- name: creating the mongodb server
+  hosts: mongodb
+  become: yes
+  tasks:
+  - name: copy mongodb repo
+    ansible.builtin.copy:
+      src: mongo.repo
+      dest: /etc/yum.repos.d/mongo.repo
+      
