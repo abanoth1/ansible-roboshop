@@ -10,6 +10,9 @@
     domain_name: "daws86s.me"      # daws86s.me is the domain name that i registered in route 53 and i'm using it to create the records for the ec2 instances that i will create in this playbook
     instances:
      - mongodb
+     - redis
+     - mysql
+     - rabbitmq
   tasks:
   - name: create ec2 instance
     amazon.aws.ec2_instance:
@@ -26,15 +29,15 @@
   #   ansible.builtin.debug:
   #     msg: "{{ ec2_output }}"
 
-  - name: print the public_ip of the created instance
-    ansible.builtin.debug:
-      msg: "{{ item.instances[0].public_ip_address }}" # Accessing the public IP address of the created instance from the ec2_output variable
-    loop: "{{ ec2_output.results }}" 
+  # - name: print the public_ip of the created instance
+  #   ansible.builtin.debug:
+  #     msg: "{{ item.instances[0].public_ip_address }}" # Accessing the public IP address of the created instance from the ec2_output variable
+  #   loop: "{{ ec2_output.results }}" 
 
-  - name: print the private_ip of the created instance
-    ansible.builtin.debug:
-      msg: "{{ item.instances[0].private_ip_address }}" # Accessing the private IP address of the created instance from the ec2_output variable
-    loop: "{{ ec2_output.results }}"
+  # - name: print the private_ip of the created instance
+  #   ansible.builtin.debug:
+  #     msg: "{{ item.instances[0].private_ip_address }}" # Accessing the private IP address of the created instance from the ec2_output variable
+  #   loop: "{{ ec2_output.results }}"
 
   - name: create route 53 record for the created instance
     amazon.aws.route53:
