@@ -1,0 +1,35 @@
+# Creating the redis service by using the ansible playbook
+- name: creating the redis server
+  hosts: redis
+  become: yes
+  tasks:
+  - name: disable the default redis
+    ansible.builtin.command: dnf module disable redis -y
+
+  - name: enable the default redis
+    ansible.builtin.command: dnf module enable redis:7 -y
+    # disabilng and enabiling the default redis module 
+
+  - name: install the redis
+    ansible.builtin.package:
+      name: redis
+      state: present
+
+  - name: allow the remote connections
+    ansible.builtin.replace:
+    path: /etc/redis/redis.conf
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+
+  - name: disable the protected mode
+    ansible.builtin.lineinfile:
+      path: /etc/redis/redis.conf
+      regexp: 'protected-mode'
+      replace: 'protected-mode no'
+      # i used the lineinfile module to replace the protected mode to 'NO'
+
+  - name: start and enable the redis service
+    ansible.builtin.service:
+      name: redis
+      state: started
+      enabled: yes
