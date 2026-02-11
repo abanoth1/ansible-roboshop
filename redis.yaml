@@ -25,7 +25,7 @@
     ansible.builtin.lineinfile:
       path: /etc/redis/redis.conf
       regexp: 'protected-mode'
-      replace: 'protected-mode no'
+      line: 'protected-mode no'
       # i used the lineinfile module to replace the protected mode to 'NO'
 
   - name: start and enable the redis service
