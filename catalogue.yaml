@@ -23,11 +23,22 @@
           home: /app
   # ansible is capable of checking the idempotence of the code, we can run the playbook multiple times, it will target the desired state with out any changes
 
+      - name: remove the app directory
+        ansible.builtin.file:
+        path: /app
+        state: absent
+        # removing the directory, because when we run the command for 2nd time it will download it agian, there would be no errors if it does not exists.
+
       - name: creating the app directory
         ansible.builtin.file:
           state: directory
           path: /app
           # creating the app directory 
+
+      - name: delete the catalogue file
+        ansible.builtin.file:
+          path: /tmp/catalogue.zip
+          state: absent
 
       - name: downloading the catalogue application
         ansible.builtin.get_url:
