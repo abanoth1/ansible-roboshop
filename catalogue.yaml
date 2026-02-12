@@ -74,7 +74,7 @@
         # making use of | int < 0 to convert the string into integer
 
       - name: start and enable the catalogue
-        ansible.buitlin.service:
+        ansible.builtlin.service:
           name: catalogue
           state: started
           enabled: yes
