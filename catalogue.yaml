@@ -25,8 +25,8 @@
 
       - name: remove the app directory
         ansible.builtin.file:
-        path: /app
-        state: absent
+          path: /app
+          state: absent
         # removing the directory, because when we run the command for 2nd time it will download it agian, there would be no errors if it does not exists.
 
       - name: creating the app directory
