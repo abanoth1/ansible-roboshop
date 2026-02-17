@@ -11,6 +11,12 @@
     - maven
     - mysql
 
+# using the pip module for installing the mysql python libraries.
+  - name: installing the mysql python libraries
+    ansible.builtin.pip:
+      executable: pip3.9
+      name: PyMySQL
+
   - name: install mysql python libraries
     ansible.builtin.pip:
       executable: pip3.9

@@ -49,3 +49,16 @@
       value: "{{ item.instances[0].public_ip_address }}" # Using the public IP address of the created instance as the value for the A record in Route 53
       overwrite: yes
     loop: "{{ ec2_output.results }}"
+
+# ceatingt the route 53 record for the frontend instance to access it using the domain name daws86s.me instead of the public IP address of the instance
+  - name: creating the route 53 record for the frontend
+    amazon.aws.route53:
+      state: present
+      zone: "{{ domain_name}}"
+      record: "{{ domain_name }}"
+      type: A
+      ttl: 1
+      value: "{{ item.instances[0].public_ip_address }}"
+      overwrite: yes
+    when: item.item == "frontend"
+    loop: "{{ ec2_output.results }}"
